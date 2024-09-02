@@ -1,7 +1,39 @@
-* {
-    font-family: Montserrat;
-    margin: 0;
-    padding: 0;
-    text-decoration: none;
-    list-style-type: none;
+:root {
+  --principal-color: #1d2d44;
+  --color-1: #748cab;
+  --color-2: #f0ebd8;
+  --color-3: #52b788;
+  --color-4: #3e5c76;
+  --colro-5: #d9d9d9;
+  --title-1: 32px;
+  --title-2: 28px;
+  --subtitle: 16px;
+  --name-moneda: 28px;
+  --price: 24px;
+  --small-text: 14px;
 }
+
+* {
+  font-family: Montserrat, sans-serif;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style-type: none;
+}
+
+.button-nav {
+    width: 150px;
+    height: 40px;
+
+  }
+  
+  .button-time {
+    width: 250px;
+    height: 40px;
+  }
+  
+  .button-send {
+    width: 180px;
+    height: 40px;
+  }
+  
