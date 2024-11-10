@@ -105,6 +105,29 @@ def dolares():
     return jsonify(divisas_dict)
 
 
+# traigo los historicos de dolares
+@app.route('/get-cotizaciones', methods=['GET'])
+def get_cotizaciones():
+    url = "https://api.argentinadatos.com/v1/cotizaciones/dolares"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        return jsonify(response.json())
+    else: 
+        return jsonify({'error':'No se pudo obtener los datos'}), 500
+    
+# Ruta para obtener cotizaciones por tipo de dólar
+@app.route('/get-cotizaciones/<tipoDolar>', methods=['GET'])
+def get_cotizaciones_tipo(tipoDolar):
+    url = f"https://api.argentinadatos.com/v1/cotizaciones/dolares/{tipoDolar}"
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        return jsonify(response.json())
+    else:
+        return jsonify({"error": "No se pudo obtener los datos"}), 500
+
+
 # Creo la ruta de inicio
 @app.route('/')
 def index():
