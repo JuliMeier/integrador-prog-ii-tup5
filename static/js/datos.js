@@ -4,6 +4,20 @@ const cards = document.querySelector(".card-cotizaciones")
 
 cotizacionesDolar();
 cotizacionesOtras();
+actualizacionHora();
+
+function actualizacionHora(){
+  fetch('http://127.0.0.1:5000/dolares')
+  .then(response => response.json())
+  .then((data) => {
+    
+    let horaApi = data['Blue']['cotizaciones'][0].fecha_actualizacion
+    const fecha = new Date(horaApi);
+    const opciones = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+    const fechaFormateada = fecha.toLocaleString('es-ES', opciones);
+    document.querySelector("#hora").innerHTML = fechaFormateada;
+  })
+}
 
 function cotizacionesDolar() {
   fetch("http://127.0.0.1:5000/dolares")
@@ -20,13 +34,13 @@ function cotizacionesDolar() {
               monedaData.nombre,
               cotizacion.compra.toLocaleString("es-ES"),
               cotizacion.venta.toLocaleString("es-ES"),
-              console.log(monedaData)
+              
+              
             );
           });
         }
+        
       }
-      // Puedes añadir una función para mostrar el tiempo de actualización
-      // mostrarTiempoReal(data["Dólar"].cotizaciones[0].fecha_actualizacion);
     })
     .catch((error) => console.error("Error al obtener datos:", error));
 
@@ -48,13 +62,11 @@ function cotizacionesOtras() {
               monedaData.nombre,
               cotizacion.compra.toLocaleString("es-ES"),
               cotizacion.venta.toLocaleString("es-ES"),
-              console.log(monedaData)
+              
             );
           });
         }
       }
-      // Puedes añadir una función para mostrar el tiempo de actualización
-      // mostrarTiempoReal(data["Dólar"].cotizaciones[0].fecha_actualizacion);
     })
     .catch((error) => console.error("Error al obtener datos:", error));
 }
@@ -77,31 +89,6 @@ function cotizacionesOtras() {
      document.querySelector(".card-container").appendChild(card);
  }
 
-// funcion que me trae la fecha de la api
-
-// function mostrarTiempoReal(fecha) {
-
-
-//     // Crea un nuevo objeto Date a partir de la fecha recibida
-//     const fechaObj = new Date(fecha);
-
-//     // Opciones para formatear la fecha
-//     const opciones = { 
-//         year: 'numeric', 
-//         month: 'long', 
-//         day: 'numeric', 
-//         hour: '2-digit', 
-//         minute: '2-digit',
-//         hour12: false // Cambia a true si quieres formato de 12 horas
-//     };
-
-//     // Formatear la fecha
-//     const fechaFormateada = fechaObj.toLocaleString('es-ES', opciones);
-
-//     // Actualiza el contenido del elemento con id "hora"
-//     document.querySelector("#hora").innerHTML = fechaFormateada;
-
-// }
 
 // // funcion para borrar las card al actualizar y que no se dupliquen.
 // function actualizarCards(){
@@ -115,10 +102,37 @@ function cotizacionesOtras() {
 
 
 
-// para formatear los tipos de cambio     .toLocaleString('es-ES',{maximumFractionDigits: 2, useGrouping:"always"})
+// formulario para envio de mail
 
+// const form = document.getElementById("contact-form");
 
+// form.addEventListener("submit", function(event) {
+//   event.preventDefault();  
+ 
+//   const name = document.getElementById("name").value;
+//   const email = document.getElementById("email").value;
 
-
+//   // Send data to Python script using AJAX
+//   fetch("/send_email", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify({
+//       name: name,
+//       email: email
+//     })
+//   })
+//   .then(response => response.json())
+//   .then(data => {
+//     // Handle   
+ 
+//     console.log("Email sent successfully!", data);
+//   })
+//   .catch(error => {
+//     // Handle errors (e.g., display an error message)
+//     console.error("Error sending email:", error);
+//   });
+// });
 
 

@@ -40,6 +40,7 @@
 }  
 
 
+
   .button-time {
     width: 250px;
     height: 40px;
@@ -165,6 +166,10 @@
   text-align: center; /* Centra el contenido dentro de cada elemento */
 }
 
+.grafico-container {
+  margin-top: 25px;
+}
+
  /* .footer-integrantes h4 {
   font-size: var(--title-2);
 }   */
@@ -242,7 +247,7 @@
     text-align: center;
     text-decoration: none;
     cursor: pointer;
-    margin-left: 20px;
+    margin-left: 20px; 
 
   }
 
@@ -250,12 +255,12 @@
     margin-right: 51px;
   }
 
-  .historicos{
+  .active{
     background-color: var(--color-2)!important;
     color: #000 !important;
-    margin-right: 51px;
+    
   }
-  .historicos:hover {
+  .active:hover {
     background-color: #999792!important;
   }
 
