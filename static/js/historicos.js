@@ -17,6 +17,9 @@ function actualizacionHora(){
   })
 }
 
+botonActualizarHora = document.querySelector('.button-time')
+botonActualizarHora.addEventListener('click', actualizacionHora);
+
 // evento q capta cuando se selecciona un tipo de dolar
 button.addEventListener('click',() => {
   const selectValue = selectElement.value
@@ -34,7 +37,7 @@ button.addEventListener('click',() => {
 // funcion que me grafica todos los dolares
 async function historicosDolar() {
   try {
-    //const response = await fetch("https://api.argentinadatos.com/v1/cotizaciones/dolares");
+    
     const response = await fetch('/get-cotizaciones')
     const jsonData = await response.json();
     console.log(jsonData);
@@ -89,7 +92,7 @@ myChart.setOption(option);
 // funcion que grafica por tipo de dolar
 async function historicosTipoDeDolar(tipoDolar) {
   try {
-    //const response = await fetch(`https://api.argentinadatos.com/v1/cotizaciones/dolares/${tipoDolar}`);
+    
     const response = await fetch(`/get-cotizaciones/${tipoDolar}`)
     const jsonData = await response.json();
     console.log(jsonData);

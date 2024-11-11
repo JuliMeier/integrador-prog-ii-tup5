@@ -41,7 +41,7 @@
                 <p class="text-main">Selecciona la moneda sobre la que quieras recibir su cotización al Mail</p>
             </div>
             <div class="time-header">
-                <button class="button-time" onclick={actualizarCards()}>Actualizar</button>
+                <button class="button-time">Actualizar</button>
                 <p class="text-main" id="hora">01/11/2024 12:00</p>
             </div>
 
@@ -49,13 +49,13 @@
         <form action="">
             <select class="select-form" id="moneda-select">
                 <option value="" disabled selected>Seleccione moneda</option>
-                <option value="dolar-oficial">Dólar Oficial</option>
-                <option value="dolar-blue">Dólar Blue</option>
-                <option value="dolar-bolsa">Dólar Bolsa</option>
-                <option value="dolar-ccl">Dólar CCL</option>
-                <option value="dolar-tarjeta">Dólar Tarjeta</option>
-                <option value="dolar-mayorista">Dólar Mayorista</option>
-                <option value="dolar-cripto">Dólar Cripto</option>
+                <option value="oficial">Dólar Oficial</option>
+                <option value="blue">Dólar Blue</option>
+                <option value="bolsa">Dólar Bolsa</option>
+                <option value="contadoconliqui">Dólar CCL</option>
+                <option value="tarjeta">Dólar Tarjeta</option>
+                <option value="mayorista">Dólar Mayorista</option>
+                <option value="cripto">Dólar Cripto</option>
                 <option value="real">Real</option>
                 <option value="peso-chile">Peso Chileno</option>
                 <option value="peso-uruguayo">Peso Uruguayo</option>
@@ -89,7 +89,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-primary">Enviar</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" id="submit-button">Enviar</button>
         </div>
       </div>
     </div>
@@ -131,7 +131,7 @@
                     <h5>UTN</h5>
                 </div>
                 <div class="footer-fuente">
-                    <h4>Fuente</h4>
+                    <h4>Fuente | Dolar API</h4>
                     <a href="https://dolarapi.com" target="_blank"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-pencil-dollar"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /><path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" /><path d="M19 21v1m0 -8v1" /></svg></a>
                 </div>
         </div>

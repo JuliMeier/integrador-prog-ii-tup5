@@ -1,7 +1,6 @@
 
 const cards = document.querySelector(".card-cotizaciones")
 
-
 cotizacionesDolar();
 cotizacionesOtras();
 actualizacionHora();
@@ -16,8 +15,12 @@ function actualizacionHora(){
     const opciones = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
     const fechaFormateada = fecha.toLocaleString('es-ES', opciones);
     document.querySelector("#hora").innerHTML = fechaFormateada;
+    
   })
 }
+
+botonActualizarHora = document.querySelector('.button-time')
+botonActualizarHora.addEventListener('click', actualizacionHora);
 
 function cotizacionesDolar() {
   fetch("http://127.0.0.1:5000/dolares")
@@ -90,21 +93,61 @@ function cotizacionesOtras() {
  }
 
 
-// // funcion para borrar las card al actualizar y que no se dupliquen.
-// function actualizarCards(){
-//   let cards = document.querySelectorAll(".card-cotizaciones");
-//   cards.forEach(card => card.style.display = 'none');
-//   cotizacionesDolar();
-//   cotizacionesOtras();
+ // envio de formulario por mail 
+
+ document.getElementById("submit-button").addEventListener("click", async function() {
+  // Obtener el valor seleccionado en el select
+  const monedaSeleccionada = document.getElementById("moneda-select").value;
   
-//   }
+  // Obtener los valores del nombre y correo del formulario del modal
+  const nombre = document.getElementById("name").value;
+  const correo = document.getElementById("email").value;
 
+  // Comprobar si todos los campos están completos
+  if (monedaSeleccionada && nombre && correo) {
+      try {
+          // Enviar los datos al backend usando fetch
+          const response = await fetch("http://localhost:5000/enviar_cotizacion", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                  moneda: monedaSeleccionada,
+                  nombre: nombre,
+                  correo: correo
+              })
+          });
 
+          // Comprobar si la respuesta fue exitosa
+          if (!response.ok) {
+              throw new Error(`Error HTTP: ${response.status}`);
+          }
+
+          // Intentar analizar la respuesta como JSON
+          const result = await response.json();
+
+          if (result.success) {
+            
+            const myModal = new bootstrap.Modal(document.getElementById('formModal'));
+            myModal.hide();  
+            alert("¡Tu correo ha sido enviado!");
+          } else {
+              alert("Hubo un error al enviar los datos.");
+          }
+      } catch (error) {
+          console.error("Error al enviar datos:", error);
+          alert("Hubo un problema al enviar los datos. Por favor, inténtalo nuevamente.");
+      }
+  } else {
+      alert("Por favor complete todos los campos.");
+  }
+});
 
 
 // formulario para envio de mail
 
-// const form = document.getElementById("contact-form");
+//const form = document.getElementById("contact-form");
 
 // form.addEventListener("submit", function(event) {
 //   event.preventDefault();  
