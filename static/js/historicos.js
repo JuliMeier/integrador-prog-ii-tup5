@@ -1,5 +1,6 @@
 historicosDolar();
 actualizacionHora();
+cargarTabla();
 
 const selectElement = document.getElementById('moneda-select');
 const button = document.querySelector('.button-send');
@@ -30,6 +31,8 @@ button.addEventListener('click',() => {
   .then(data => console.log(data));
 
   historicosTipoDeDolar(selectValue);
+  limpiarTabla();
+  cargarTablaTipoDolar(selectValue);
 })
 
 
@@ -142,6 +145,100 @@ myChart.setOption(option);
     console.error('Error:', error);
   }
 }
+
+
+// funcion para cargar tabla de datos de todos los tipos de dolar
+
+async function cargarTabla() {
+
+  try {
+
+  const response = await fetch('/get-cotizaciones');
+  if (!response.ok) {
+    throw new Error('Error al obtener los datos');
+  }
+
+  const datos = await response.json();
+
+  const tbody = document.querySelector(".table tbody");
+
+  datos.forEach((item)=> {
+    const fila = document.createElement('tr');
+
+    const fecha = document.createElement('td')
+    fecha.textContent = item.fecha
+
+    const casa = document.createElement('td')
+    casa.textContent = item.casa
+
+    const compra = document.createElement('td')
+    compra.textContent = item.compra
+
+    const venta = document.createElement('td')
+    venta.textContent = item.venta
+
+    fila.appendChild(fecha);
+    fila.appendChild(casa);
+    fila.appendChild(compra);
+    fila.appendChild(venta);
+
+    tbody.appendChild(fila)
+  });
+}
+ catch (error) {
+    console.error('Error cargando los datos: ', error);
+}
+}
+
+// funcion para cargar tabla de datos segun tipo de dolar
+
+async function cargarTablaTipoDolar(tipoDolar) {
+
+  try {
+
+  const response = await fetch(`/get-cotizaciones/${tipoDolar}`);
+  if (!response.ok) {
+    throw new Error('Error al obtener los datos');
+  }
+
+  const datos = await response.json();
+
+  const tbody = document.querySelector(".table tbody");
+
+  datos.forEach((item)=> {
+    const fila = document.createElement('tr');
+
+    const fecha = document.createElement('td')
+    fecha.textContent = item.fecha
+
+    const casa = document.createElement('td')
+    casa.textContent = item.casa
+
+    const compra = document.createElement('td')
+    compra.textContent = item.compra
+
+    const venta = document.createElement('td')
+    venta.textContent = item.venta
+
+    fila.appendChild(fecha);
+    fila.appendChild(casa);
+    fila.appendChild(compra);
+    fila.appendChild(venta);
+
+    tbody.appendChild(fila)
+  });
+}
+ catch (error) {
+    console.error('Error cargando los datos: ', error);
+}
+}
+
+function limpiarTabla() {
+  const tabla = document.querySelector("table"); // Reemplaza "miTabla" con el ID de tu tabla
+  const tbody = tabla.querySelector(".table tbody");
+  tbody.innerHTML = "";
+}
+
 
 
 

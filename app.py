@@ -105,7 +105,7 @@ def dolares():
     return jsonify(divisas_dict)
 
 
-# traigo los historicos de dolares
+# traigo los historicos de dolares de todas las casas de cambio
 @app.route('/get-cotizaciones', methods=['GET'])
 def get_cotizaciones():
     url = "https://api.argentinadatos.com/v1/cotizaciones/dolares"
