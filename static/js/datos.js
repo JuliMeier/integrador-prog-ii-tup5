@@ -131,9 +131,18 @@ function cotizacionesOtras() {
             
             const myModal = new bootstrap.Modal(document.getElementById('formModal'));
             myModal.hide();  
-            alert("¡Tu correo ha sido enviado!");
+            Swal.fire({
+              title: "Buenas noticias!",
+              text: "¡Tu correo ha sido enviado!",
+              icon: "success"
+            });
           } else {
               alert("Hubo un error al enviar los datos.");
+              Swal.fire({
+                title: "Malas noticias!",
+                text: "¡Hubo un error al enviar los datos!",
+                icon: "error"
+              });
           }
       } catch (error) {
           console.error("Error al enviar datos:", error);

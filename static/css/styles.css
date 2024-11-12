@@ -166,6 +166,12 @@
   text-align: center; /* Centra el contenido dentro de cada elemento */
 }
 
+.form-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
 .section-container{
   display: flex;
   justify-content: space-around;

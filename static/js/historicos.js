@@ -4,6 +4,8 @@ cargarTabla();
 
 const selectElement = document.getElementById('moneda-select');
 const button = document.querySelector('.button-send');
+const inputFecha = document.getElementById('fecha-input');
+
 
 function actualizacionHora(){
   fetch('http://127.0.0.1:5000/dolares')
@@ -26,13 +28,59 @@ button.addEventListener('click',() => {
   const selectValue = selectElement.value
 
   console.log('Selected value:', selectValue);
-  fetch(`https://api.argentinadatos.com/v1/cotizaciones/dolares/${selectValue}`)
-  .then(response => response.json())
-  .then(data => console.log(data));
 
   historicosTipoDeDolar(selectValue);
   limpiarTabla();
   cargarTablaTipoDolar(selectValue);
+})
+
+inputFecha.addEventListener('change',() => {
+  const selectValue = selectElement.value
+  
+  
+  const fechaSeleccionada = inputFecha.value;
+  //console.log(inputFecha)
+  console.log('Selected value:', selectValue);
+  console.log('Fecha seleccionada:', fechaSeleccionada);
+  //const partesFecha = fechaSeleccionada.split('-');
+  //const nuevaFecha = partesFecha.join('/');
+  //console.log(nuevaFecha)
+  limpiarTabla();
+
+
+  fetch(`/get-cotizaciones?casa=${selectValue}&fecha=${fechaSeleccionada}`)
+  .then(response => response.json())
+  .then(data => {
+    console.log(data)
+    
+    // const tbody = document.querySelector(".table tbody");
+    // const fila = document.createElement('tr');
+  
+    // const fecha = document.createElement('td')
+    // fecha.textContent = data[0].fecha
+  
+    // const casa = document.createElement('td')
+    // casa.textContent = data.casa
+  
+    // const compra = document.createElement('td')
+    // compra.textContent = data.compra
+  
+    // const venta = document.createElement('td')
+    // venta.textContent = data.venta
+    // fila.appendChild(fecha);
+    // fila.appendChild(casa);
+    // fila.appendChild(compra);
+    // fila.appendChild(venta);
+  
+    // tbody.appendChild(fila)
+  
+
+  } 
+);  
+
+  
+  //cargarTablaTipoDolarFecha(selectValue, fechaSeleccionada);
+
 })
 
 
@@ -50,8 +98,7 @@ async function historicosDolar() {
 
     jsonData.forEach(item => {
     xAxisData.push(item.fecha);
-    yAxisData.push(item.venta);
-      // You can use 'venta' or any other relevant value
+    yAxisData.push(item.venta);  
     
     });
 
@@ -70,9 +117,17 @@ var option = {
     data: ['']
   },
   xAxis: {
-
     data: xAxisData
   },
+  dataZoom: [{
+    type: 'inside',
+    start: 0,
+    end: 100
+  }, {
+    type: 'slider',
+    start: 0,
+    end: 100
+  }],
   yAxis: {},
   series: [
     {
@@ -83,9 +138,15 @@ var option = {
   ]
 };
 
-// Display the chart using the configuration items and data just specified.
+// Paso las opciones como parametros de mi grafico.
 myChart.setOption(option);
-  
+// Función para actualizar el gráfico cuando se selecciona un rango
+myChart.on('brush', function (params) {
+  var range = params.batch[0].range;
+  // Actualiza las opciones del gráfico con el nuevo rango
+  option.xAxis.min = range[0];
+  option.xAxis.max = range[1];
+});
   } catch (error) {
     console.error('Error:', error);
   }
@@ -233,8 +294,48 @@ async function cargarTablaTipoDolar(tipoDolar) {
 }
 }
 
+//function para traer tipo de cambio por fecha
+// async function cargarTablaTipoDolarFecha(tipoDolar, fecha) {
+//   try {
+//     const response = await fetch(`/get-cotizaciones?casa=${tipoDolar}&fecha=${fecha}`);
+//     if (!response.ok) {
+//       throw new Error('Error al obtener los datos');
+//     }
+//     const datos = await response.json();
+//     //console.log(datos);
+//     const tbody = document.querySelector(".table tbody");
+
+//   datos.forEach((item)=> {
+//     const fila = document.createElement('tr');
+
+//     const fecha = document.createElement('td')
+//     fecha.textContent = item.fecha
+
+//     const casa = document.createElement('td')
+//     casa.textContent = item.casa
+
+//     const compra = document.createElement('td')
+//     compra.textContent = item.compra
+
+//     const venta = document.createElement('td')
+//     venta.textContent = item.venta
+
+//     fila.appendChild(fecha);
+//     fila.appendChild(casa);
+//     fila.appendChild(compra);
+//     fila.appendChild(venta);
+
+//     tbody.appendChild(fila)
+    
+//   }); 
+//   }
+//   catch (error) {
+//     console.error('Error cargando los datos: ', error);
+// }
+// }
+
 function limpiarTabla() {
-  const tabla = document.querySelector("table"); // Reemplaza "miTabla" con el ID de tu tabla
+  const tabla = document.querySelector("table"); 
   const tbody = tabla.querySelector(".table tbody");
   tbody.innerHTML = "";
 }

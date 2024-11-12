@@ -1,10 +1,13 @@
 from flask import Flask, jsonify, json, render_template, request
 from flask_cors import CORS
 import requests
-# from datetime import datetime
+import logging
+from datetime import datetime
+
 
 app = Flask(__name__)
 CORS(app)
+logging.basicConfig(level=logging.DEBUG)
 
 class Cotizacion:
     def __init__(self, compra, venta, casa, fecha_actualizacion):
@@ -108,11 +111,36 @@ def dolares():
 # traigo los historicos de dolares de todas las casas de cambio
 @app.route('/get-cotizaciones', methods=['GET'])
 def get_cotizaciones():
+    fecha_filtro = request.args.get('fecha')
+    casa_filtro = request.args.get('casa')
+    print(casa_filtro)
+    print(fecha_filtro)
+    
     url = "https://api.argentinadatos.com/v1/cotizaciones/dolares"
     response = requests.get(url)
 
     if response.status_code == 200:
-        return jsonify(response.json())
+        data = response.json()
+        info_moneda = []
+
+        for i in data:
+            fecha_elemento = datetime.strptime(i['fecha'], '%Y-%m-%d')
+            if (fecha_filtro and fecha_elemento == datetime.strptime(fecha_filtro, '%Y-%m-%d')) and \
+            (casa_filtro and i['casa'] == casa_filtro):
+                info_moneda.append({
+                    'casa': i['casa'],
+                    'compra': i['compra'],
+                    'venta': i['venta'],
+                    'fecha': i['fecha']
+            })
+            else: 
+                info_moneda.append({
+                    'casa': i['casa'],
+                    'compra': i['compra'],
+                    'venta': i['venta'],
+                    'fecha': i['fecha']
+                })
+        return jsonify(info_moneda)
     else: 
         return jsonify({'error':'No se pudo obtener los datos'}), 500
     
@@ -126,7 +154,18 @@ def get_cotizaciones_tipo(tipoDolar):
         return jsonify(response.json())
     else:
         return jsonify({"error": "No se pudo obtener los datos"}), 500
+    
+# Ruta para obtener cotizacion por tipo de dólar y fecha
+# @app.route('/get-cotizaciones/<tipoDolar>/<fecha>', methods=['GET'])
+# def get_cotizaciones_tipo_fecha(tipoDolar, fecha):
+#     url = f"https://api.argentinadatos.com/v1/cotizaciones/dolares/{tipoDolar}/{fecha}"
+#     logging.debug(f"Realizando solicitud a: {url}")
+#     response = requests.get(url)
 
+#     if response.status_code == 200:
+#         return jsonify(response.json())
+#     else:
+#         return jsonify({"error": "No se pudo obtener los datos"}), 500
 
 # Creo la ruta de inicio
 @app.route('/')

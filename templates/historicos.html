@@ -47,21 +47,28 @@
                 <p class="text-main" id="hora">22/08/2024 17:58</p>
             </div>
         </div>
-        
+        <div class="form-container">
         <form action="">
             <select class="select-form" id="moneda-select">
                 <option value="" disabled selected>Seleccione grafico por tipo de dolar</option>
                 <option value="oficial">Oficial</option>
                 <option value="blue">Blue</option>
                 <option value="bolsa">Bolsa</option>
-                <option value="ccl">CCL</option>
+                <option value="contadoconliqui">CCL</option>
                 <option value="cripto">Cripto</option>
                 <option value="mayorista">Mayorista</option>
                 <option value="solidario">Solidario</option>
                 <option value="turista">Turista</option>
             </select>
             <button type="button" class="button-send" data-bs-toggle="modal" data-bs-target="#formModal" >Graficar</button>
-        </form>     
+        </form>
+        <form>
+            <label for="fecha" class="form-label">Ingrese para ver por fecha</label>
+            <input type="date" class="form-control" id="fecha-input" required>
+        </form>
+        </div> 
+        
+
     </main>
     <div class="section-container">
         <div class="grafico-container">
@@ -69,6 +76,7 @@
         </div>
 
         <div class="table-container">
+
         <table class="table">
             <thead>
               <tr>
