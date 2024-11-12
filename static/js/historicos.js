@@ -39,47 +39,47 @@ inputFecha.addEventListener('change',() => {
   
   
   const fechaSeleccionada = inputFecha.value;
-  //console.log(inputFecha)
+  
   console.log('Selected value:', selectValue);
   console.log('Fecha seleccionada:', fechaSeleccionada);
-  //const partesFecha = fechaSeleccionada.split('-');
-  //const nuevaFecha = partesFecha.join('/');
-  //console.log(nuevaFecha)
+
   limpiarTabla();
 
 
-  fetch(`/get-cotizaciones?casa=${selectValue}&fecha=${fechaSeleccionada}`)
+  fetch(`/get-cotizaciones/${selectValue}?fecha=${fechaSeleccionada}`)
   .then(response => response.json())
   .then(data => {
     console.log(data)
+
+    data.forEach((item) => {
+      const tbody = document.querySelector(".table tbody");
+      const fila = document.createElement('tr');
     
-    // const tbody = document.querySelector(".table tbody");
-    // const fila = document.createElement('tr');
-  
-    // const fecha = document.createElement('td')
-    // fecha.textContent = data[0].fecha
-  
-    // const casa = document.createElement('td')
-    // casa.textContent = data.casa
-  
-    // const compra = document.createElement('td')
-    // compra.textContent = data.compra
-  
-    // const venta = document.createElement('td')
-    // venta.textContent = data.venta
-    // fila.appendChild(fecha);
-    // fila.appendChild(casa);
-    // fila.appendChild(compra);
-    // fila.appendChild(venta);
-  
-    // tbody.appendChild(fila)
+      const fecha = document.createElement('td')
+      fecha.textContent = item.fecha
+    
+      const casa = document.createElement('td')
+      casa.textContent = item.casa
+    
+      const compra = document.createElement('td')
+      compra.textContent = item.compra
+    
+      const venta = document.createElement('td')
+      venta.textContent = item.venta
+      fila.appendChild(fecha);
+      fila.appendChild(casa);
+      fila.appendChild(compra);
+      fila.appendChild(venta);
+    
+      tbody.appendChild(fila)
+    })
+    
+    
   
 
   } 
 );  
 
-  
-  //cargarTablaTipoDolarFecha(selectValue, fechaSeleccionada);
 
 })
 
@@ -294,45 +294,7 @@ async function cargarTablaTipoDolar(tipoDolar) {
 }
 }
 
-//function para traer tipo de cambio por fecha
-// async function cargarTablaTipoDolarFecha(tipoDolar, fecha) {
-//   try {
-//     const response = await fetch(`/get-cotizaciones?casa=${tipoDolar}&fecha=${fecha}`);
-//     if (!response.ok) {
-//       throw new Error('Error al obtener los datos');
-//     }
-//     const datos = await response.json();
-//     //console.log(datos);
-//     const tbody = document.querySelector(".table tbody");
 
-//   datos.forEach((item)=> {
-//     const fila = document.createElement('tr');
-
-//     const fecha = document.createElement('td')
-//     fecha.textContent = item.fecha
-
-//     const casa = document.createElement('td')
-//     casa.textContent = item.casa
-
-//     const compra = document.createElement('td')
-//     compra.textContent = item.compra
-
-//     const venta = document.createElement('td')
-//     venta.textContent = item.venta
-
-//     fila.appendChild(fecha);
-//     fila.appendChild(casa);
-//     fila.appendChild(compra);
-//     fila.appendChild(venta);
-
-//     tbody.appendChild(fila)
-    
-//   }); 
-//   }
-//   catch (error) {
-//     console.error('Error cargando los datos: ', error);
-// }
-// }
 
 function limpiarTabla() {
   const tabla = document.querySelector("table"); 

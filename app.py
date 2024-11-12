@@ -147,25 +147,37 @@ def get_cotizaciones():
 # Ruta para obtener cotizaciones por tipo de dólar
 @app.route('/get-cotizaciones/<tipoDolar>', methods=['GET'])
 def get_cotizaciones_tipo(tipoDolar):
+    fecha_filtro = request.args.get('fecha')
     url = f"https://api.argentinadatos.com/v1/cotizaciones/dolares/{tipoDolar}"
     response = requests.get(url)
     
     if response.status_code == 200:
-        return jsonify(response.json())
+        data = response.json()
+        info_moneda = []
+
+        for i in data:
+
+            if fecha_filtro:
+                if i['fecha'] == fecha_filtro:  # Filtrar solo si la fecha coincide
+                    info_moneda.append({
+                        'casa': i['casa'],
+                        'compra': i['compra'],
+                        'venta': i['venta'],
+                        'fecha': i['fecha']
+                    })
+            else:
+                # Si no hay filtro de fecha, agrega todas las cotizaciones
+                info_moneda.append({
+                    'casa': i['casa'],
+                    'compra': i['compra'],
+                    'venta': i['venta'],
+                    'fecha': i['fecha']
+                })
+        
+        return jsonify(info_moneda)
     else:
         return jsonify({"error": "No se pudo obtener los datos"}), 500
     
-# Ruta para obtener cotizacion por tipo de dólar y fecha
-# @app.route('/get-cotizaciones/<tipoDolar>/<fecha>', methods=['GET'])
-# def get_cotizaciones_tipo_fecha(tipoDolar, fecha):
-#     url = f"https://api.argentinadatos.com/v1/cotizaciones/dolares/{tipoDolar}/{fecha}"
-#     logging.debug(f"Realizando solicitud a: {url}")
-#     response = requests.get(url)
-
-#     if response.status_code == 200:
-#         return jsonify(response.json())
-#     else:
-#         return jsonify({"error": "No se pudo obtener los datos"}), 500
 
 # Creo la ruta de inicio
 @app.route('/')

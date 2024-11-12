@@ -154,37 +154,4 @@ function cotizacionesOtras() {
 });
 
 
-// formulario para envio de mail
-
-//const form = document.getElementById("contact-form");
-
-// form.addEventListener("submit", function(event) {
-//   event.preventDefault();  
- 
-//   const name = document.getElementById("name").value;
-//   const email = document.getElementById("email").value;
-
-//   // Send data to Python script using AJAX
-//   fetch("/send_email", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify({
-//       name: name,
-//       email: email
-//     })
-//   })
-//   .then(response => response.json())
-//   .then(data => {
-//     // Handle   
- 
-//     console.log("Email sent successfully!", data);
-//   })
-//   .catch(error => {
-//     // Handle errors (e.g., display an error message)
-//     console.error("Error sending email:", error);
-//   });
-// });
-
 
