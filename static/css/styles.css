@@ -245,6 +245,15 @@
     .footer-container {
     flex-direction: column;
 }  
+  .section-container {
+    flex-direction: column;
+  }
+  .main-header {
+    flex-direction: column;
+  }
+  .form-container {
+    flex-direction: column;
+  }
 
 } 
 
